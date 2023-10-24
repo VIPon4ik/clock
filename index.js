@@ -22,8 +22,8 @@ const monthNames = ['Січень', 'Лютий', 'Березень', 'Квіт�
 
 const refs = {
     hourHand: document.querySelector(".hour-hand"), 
-    minutesHand: document.querySelector(".minutes-hand"), 
-    secondsHand: document.querySelector(".seconds-hand"), 
+    minutesHand: document.querySelector(".minute-hand"), 
+    secondsHand: document.querySelector(".second-hand"), 
     weekDay: document.querySelector(".day-of-week"),
     day: document.querySelector(".day-num"),
     month: document.querySelector(".month"),
@@ -45,6 +45,16 @@ const countClock = () => {
     refs.year.textContent = year;
 
     refs.digitalClock.textContent = currentDate.toLocaleTimeString("uk-UA")
+
+    const secondsDeg = currentDate.getSeconds() * 6;
+    const minutesDeg = currentDate.getMinutes() * 6 + secondsDeg / 60;
+    const hourDeg = currentDate.getHours() * 30 + minutesDeg / 12;
+
+    refs.secondsHand.style.transform = `rotate(${secondsDeg}deg)`;
+    refs.minutesHand.style.transform = `rotate(${minutesDeg}deg)`;
+    refs.hourHand.style.transform = `rotate(${hourDeg}deg)`;
 }
+
+countClock();
 
 setInterval(countClock, 1000);
